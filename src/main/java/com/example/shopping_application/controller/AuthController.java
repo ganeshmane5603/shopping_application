@@ -24,7 +24,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
-    @PostMapping("/")
+    @PostMapping("/login")
     public String loginUser(@RequestBody LoginRequest loginRequest){
          userRegistrationService.loginUser(loginRequest);
          return "Logged in successfully";
