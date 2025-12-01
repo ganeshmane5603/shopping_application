@@ -1,12 +1,9 @@
 package com.example.shopping_application.service;
 
-import com.example.shopping_application.dto.LoginRequest;
 import com.example.shopping_application.entity.User;
 import com.example.shopping_application.enums.Role;
 import com.example.shopping_application.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -28,7 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     // ---------------- REGISTER USER ----------------
     public User registerUser(User user) {
-
         if (user.getEmail() == null || user.getEmail().isEmpty()) {
             throw new IllegalArgumentException("Email is empty");
         }
@@ -54,10 +50,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("User not found"));
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found: " + email);
-        }
 
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), getAuthorities(user.getRoles())
         );
